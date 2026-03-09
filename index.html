@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yash Sengar • Java Full Stack Developer</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- AOS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <!-- Spline Viewer -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --bg-alt: #0e1420;
+      --card: rgba(255,255,255,0.06);
+      --card-strong: rgba(255,255,255,0.1);
+      --border: rgba(255,255,255,0.12);
+      --text: #e6eef6;
+      --muted: #9db3c6;
+      --primary: #6ee7ff;
+      --accent: #a78bfa;
+      --success: #34d399;
+      --warning: #f59e0b;
+      --gradient: radial-gradient(1200px 800px at 10% 10%, rgba(102, 233, 255, 0.12), transparent 60%), radial-gradient(1000px 700px at 90% 10%, rgba(167, 139, 250, 0.12), transparent 60%), radial-gradient(900px 600px at 50% 100%, rgba(94, 234, 212, 0.1), transparent 60%);
+    }
+
+    html, body {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(180deg, rgba(8,12,18,0.95), rgba(8,12,18,0.75));
+      backdrop-filter: saturate(120%) blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .navbar .nav-link {
+      color: var(--muted);
+      transition: color .2s ease, transform .2s ease;
+      font-weight: 500;
+      letter-spacing: .2px;
+    }
+    .navbar .nav-link:hover, .navbar .nav-link:focus, .navbar .nav-link.active {
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .navbar-brand {
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, rgba(110,231,255,0.1), rgba(167,139,250,0.12)) , var(--bg);
+      background-blend-mode: screen;
+      overflow: hidden;
+      padding: 6rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      pointer-events: none;
+    }
+    .hero .title {
+      font-size: clamp(2rem, 4vw + 1rem, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: .5px;
+    }
+    .hero .subtitle {
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: .5px;
+      margin-top: .5rem;
+    }
+    .hero .desc {
+      color: var(--muted);
+      max-width: 60ch;
+    }
+    .cta-btn {
+      background: linear-gradient(135deg, #6ee7ff, #a78bfa);
+      color: #0b0f14;
+      border: none;
+      font-weight: 700;
+      padding: .9rem 1.25rem;
+      border-radius: .8rem;
+      box-shadow: 0 10px 30px rgba(110, 231, 255, .15);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 36px rgba(167, 139, 250, .2);
+      filter: saturate(1.1);
+      color: #0b0f14;
+    }
+    .spline-wrap {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      min-height: 420px;
+    }
+    spline-viewer {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+
+    /* Sections */
+    section {
+      padding: 4.5rem 0;
+      position: relative;
+    }
+    .section-title {
+      font-weight: 800;
+      letter-spacing: .6px;
+    }
+    .section-subtitle {
+      color: var(--muted);
+    }
+
+    /* Glass card */
+    .glass-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      backdrop-filter: blur(8px) saturate(120%);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 46px rgba(0,0,0,0.3);
+      border-color: rgba(110,231,255,0.35);
+    }
+
+    /* About */
+    .profile-img {
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      object-fit: cover;
+      width: 100%;
+      height: auto;
+    }
+    .icon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: .45rem .8rem;
+      border-radius: .6rem;
+      font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .icon-badge:hover {
+      background: var(--card-strong);
+      transform: translateY(-2px);
+    }
+    .tag {
+      display: inline-block;
+      padding: .35rem .65rem;
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #0b0f14;
+      background: linear-gradient(135deg, #6ee7ff, #a78bfa);
+      margin: .25rem;
+      box-shadow: 0 6px 16px rgba(110,231,255,.15);
+    }
+
+    /* Skill logos: 3D + soft animation + POP on hover */
+    .logo-cloud {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      perspective: 900px;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 991.98px){
+      .logo-cloud { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 575.98px){
+      .logo-cloud { grid-template-columns: repeat(3, 1fr); }
+    }
+    .logo-3d {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 70px;
+      border-radius: 14px;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: radial-gradient(120% 120% at 20% 10%, rgba(255,255,255,0.06), rgba(255,255,255,0.02));}
+
+    .logo-3d:hover i,
+    .logo-3d:focus-visible i {
+      transform: translateZ(42px) scale(1.06);
+    }
+    .logo-3d:hover::before,
+    .logo-3d:focus-visible::before {
+      opacity: 1;
+    }
+    @keyframes softFloat {
+      0%   { transform: translateY(0) rotateX(0) rotateY(0); }
+      50%  { transform: translateY(-6px) rotateX(1deg) rotateY(-1deg); }
+      100% { transform: translateY(0) rotateX(0) rotateY(0); }
+    }
+    @keyframes pop {
+      0%   { transform: translateY(0) scale(1); }
+      60%  { transform: translateY(-12px) scale(1.14); }
+      100% { transform: translateY(-10px) scale(1.12); }
+    }
+
+    /* Skill chips with pop on hover */
+    .skill-card {
+      position: relative;
+      overflow: hidden;
+      padding: 1.25rem;
+      perspective: 900px;
+    }
+    .skill-card .card-title {
+      font-weight: 800;
+      letter-spacing: .6px;
+    }
+    .skill-card .skill-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: .45rem .7rem;
+      border-radius: .7rem;
+      font-weight: 600;
+      margin: .3rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      transition: transform .18s cubic-bezier(.22,.61,.36,1), border-color .25s ease, background .25s ease, box-shadow .25s ease, filter .25s ease;
+      font-size: .92rem;
+      transform-style: preserve-3d;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 6px 14px rgba(0,0,0,0.28);
+      animation: chipFloat 5.5s ease-in-out infinite alternate;
+      will-change: transform, box-shadow;
+    }
+    .skill-chip i { opacity: .9; transition: transform .18s cubic-bezier(.22,.61,.36,1); }
+    .skill-chip:hover {
+      transform: translateY(-8px) scale(1.08) rotateX(6deg) rotateY(-6deg);
+      border-color: rgba(110,231,255,0.35);
+      background: radial-gradient(120% 120% at 20% 10%, rgba(110,231,255,0.12), rgba(255,255,255,0.03));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 16px 34px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(110,231,255,0.12);
+      filter: saturate(1.06);
+      animation: popChip .22s ease-out;
+    }
+    .skill-chip:hover i { transform: translateZ(18px) scale(1.06); }
+    @keyframes chipFloat {
+      0%   { transform: translateY(0) rotateX(0) rotateY(0); }
+      100% { transform: translateY(-4px) rotateX(2deg) rotateY(-2deg); }
+    }
+    @keyframes popChip {
+      0%   { transform: translateY(0) scale(1); }
+      60%  { transform: translateY(-10px) scale(1.1); }
+      100% { transform: translateY(-8px) scale(1.08); }
+    }
+    .card-accent {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px 200px at 10% 0%, rgba(110,231,255,0.07), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Projects */
+    .project-card { overflow: hidden; }
+    .project-img {
+      height: 180px;
+      object-fit: cover;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-card:hover .project-img { filter: saturate(1.08) contrast(1.05); }
+    .project-title { font-weight: 800; letter-spacing: .5px; }
+    .project-btn {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+    }
+    .project-btn:hover {
+      color: #0b0f14;
+      background: linear-gradient(135deg, #6ee7ff, #a78bfa);
+      border-color: transparent;
+    }
+
+    /* Contact */
+    .contact-wrap { position: relative; overflow: hidden; }
+    .glass-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      backdrop-filter: blur(8px);
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .form-floating>.form-control,
+    .form-floating>.form-control:focus {
+      background-color: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .form-floating>label { color: var(--muted); }
+    .send-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: linear-gradient(135deg, #6ee7ff, #a78bfa);
+      color: #0b0f14;
+      border: none;
+      font-weight: 800;
+      padding: .9rem 1.2rem;
+      border-radius: .8rem;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 10px 30px rgba(167,139,250,.18);
+    }
+    .send-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(110,231,255,.22);
+      color: #0b0f14;
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(180deg, #0a0e14, #0b0f14);
+      border-top: 1px solid var(--border);
+    }
+    .footer h6 { font-weight: 800; letter-spacing: .5px; }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--primary); }
+    .social a {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: .7rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      margin-right: .5rem;
+      transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .social a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(110,231,255,0.35);
+      background: rgba(110,231,255,0.08);
+      color: var(--primary);
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding-top: 1rem;
+      font-size: .95rem;
+    }
+
+    /* Back to top */
+    #backToTop {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+      transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    #backToTop:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #6ee7ff, #a78bfa);
+      border-color: transparent;
+      color: #0b0f14;
+    }
+
+    /* Utilities */
+    .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+    /* Reduce motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 991.98px) {
+      .spline-wrap { min-height: 360px; margin-top: 2rem; }
+      .hero { padding: 5rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Yash Sengar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6" data-aos="fade-right">
+          <h1 class="title">Hi, I'm Yash Sengar</h1>
+          <div class="subtitle fs-4">Java Full Stack Developer</div>
+          <p class="desc mt-3">
+            I build scalable, high‑performance applications using Spring Boot, secure REST APIs, and optimized MySQL databases. I love crafting clean architectures, robust backends, and seamless user experiences.
+          </p>
+          <div class="mt-4">
+            <a href="#projects" class="btn cta-btn">
+              <i class="fa-solid fa-code-branch me-2"></i>View Projects
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="zoom-in">
+          <div class="spline-wrap">
+            <spline-viewer url="https://prod.spline.design/VJLoxp84lCdVfdZu/scene.splinecode" aria-label="Interactive 3D scene"></spline-viewer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-5" data-aos="fade-right">
+          <img class="profile-img" alt="Yash Sengar profile" src="https://flamesimagestorage.blob.core.windows.net/files/8e16b6ed-f58c-4ff3-801f-78b609fcb2ea_1773067127572_prj_drdj94k8/c4148912-51a8-451b-be93-7ad0c8252c4e-image.png" />
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <span class="icon-badge"><i class="fa-brands fa-java"></i> Java</span>
+            <span class="icon-badge"><i class="fa-brands fa-docker"></i> Docker</span>
+            <span class="icon-badge"><i class="fa-brands fa-aws"></i> AWS</span>
+            <a class="icon-badge" href="https://github.com/" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+          </div>
+        </div>
+        <div class="col-lg-7" data-aos="fade-left">
+          <h2 class="section-title">About Me</h2>
+          <p class="mt-3" style="color: var(--muted);">
+            I'm a Java Full Stack Developer focused on building secure, resilient, and scalable systems. My core strengths include designing RESTful services with Spring Boot, implementing enterprise-grade authentication and authorization, and optimizing relational schemas for performance in MySQL. I collaborate closely with teams to ship features reliably, automate deployments, and maintain high code quality through testing and best practices.
+          </p>
+          <div class="divider"></div>
+          <div class="d-flex flex-wrap">
+            <span class="tag">Spring Boot</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Docker</span>
+            <span class="tag">AWS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="text-center mb-4" data-aos="fade-up">
+        <h2 class="section-title">Skills</h2>
+        <p class="section-subtitle">A comprehensive toolkit for building robust, production-ready applications.</p>
+      </div>
+
+      <!-- 3D logo cloud (soft animated + pop on hover) -->
+      <div class="logo-cloud mb-4" data-aos="zoom-in">
+        <div class="logo-3d tilt" aria-label="Java" title="Java" style="animation-delay: .0s;"><i class="fa-brands fa-java" style="color:#f97316;"></i></div>
+        <div class="logo-3d tilt" aria-label="Spring" title="Spring" style="animation-delay: .3s;"><i class="fa-solid fa-leaf" style="color:#34d399;"></i></div>
+        <div class="logo-3d tilt" aria-label="MySQL" title="MySQL" style="animation-delay: .6s;"><i class="fa-solid fa-database" style="color:#60a5fa;"></i></div>
+        <div class="logo-3d tilt" aria-label="JavaScript" title="JavaScript" style="animation-delay: .9s;"><i class="fa-brands fa-js" style="color:#f59e0b;"></i></div>
+        <div class="logo-3d tilt" aria-label="Docker" title="Docker" style="animation-delay: 1.2s;"><i class="fa-brands fa-docker" style="color:#38bdf8;"></i></div>
+        <div class="logo-3d tilt" aria-label="AWS" title="AWS" style="animation-delay: 1.5s;"><i class="fa-brands fa-aws" style="color:#facc15;"></i></div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Programming -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-code me-2" style="color:#6ee7ff;"></i>Programming</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-brands fa-java" style="color:#f97316;"></i>Java</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-database" style="color:#60a5fa;"></i>SQL</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-js" style="color:#f59e0b;"></i>JavaScript</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-html5" style="color:#ef4444;"></i>HTML</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-css3-alt" style="color:#3b82f6;"></i>CSS</span>
+            </div>
+          </div>
+        </div>
+        <!-- Backend -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-server me-2" style="color:#a78bfa;"></i>Backend</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-leaf" style="color:#34d399;"></i>Spring Boot</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-diagram-project" style="color:#a78bfa;"></i>Spring MVC</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-table" style="color:#60a5fa;"></i>Spring Data JPA</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-key" style="color:#f472b6;"></i>Spring Security (JWT)</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-cubes" style="color:#8b5cf6;"></i>Hibernate</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-plug" style="color:#22d3ee;"></i>REST API Development</span>
+            </div>
+          </div>
+        </div>
+        <!-- Frontend -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-desktop me-2" style="color:#6ee7ff;"></i>Frontend</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-leaf" style="color:#34d399;"></i>Thymeleaf</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-bootstrap" style="color:#a78bfa;"></i>Bootstrap</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-js" style="color:#f59e0b;"></i>JavaScript</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-arrows-rotate" style="color:#60a5fa;"></i>AJAX</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-sitemap" style="color:#6ee7ff;"></i>DOM Manipulation</span>
+            </div>
+          </div>
+        </div>
+        <!-- Database -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-database me-2" style="color:#34d399;"></i>Database</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-database" style="color:#60a5fa;"></i>MySQL</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-plug" style="color:#22d3ee;"></i>JDBC</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-diagram-project" style="color:#a78bfa;"></i>ER Design</span>
+            </div>
+          </div>
+        </div>
+        <!-- Testing -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-vial me-2" style="color:#f472b6;"></i>Testing</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-check-double" style="color:#34d399;"></i>JUnit 5</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-robot" style="color:#8b5cf6;"></i>Mockito</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-diagram-project" style="color:#a78bfa;"></i>Integration Testing</span>
+            </div>
+          </div>
+        </div>
+        <!-- Tools -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-screwdriver-wrench me-2" style="color:#60a5fa;"></i>Tools</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-cubes" style="color:#22d3ee;"></i>Maven</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-git-alt" style="color:#ef4444;"></i>Git</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-github" style="color:#e6eef6;"></i>GitHub</span>
+              <span classPostman</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-jetbrains" style="color:#f59e0b;"></i>IntelliJ IDEA</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-vuejs" style="color:#34d399;"></i>VS Code</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-e" style="color:#60a5fa;"></i>Eclipse</span>
+            </div>
+          </div>
+        </div>
+        <!-- DevOps -->
+        <div class="col-md-6 col-lg-6" data-aos="fade-up">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-diagram-project me-2" style="color:#a78bfa;"></i>DevOps</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-server" style="color:#60a5fa;"></i>Apache Tomcat</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-docker" style="color:#38bdf8;"></i>Docker</span>
+              <span class="skill-chip tilt"><i class="fa-brands fa-aws" style="color:#facc15;"></i>AWS EC2 (Basic)</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-terminal" style="color:#9ca3af;"></i>Linux Commands</span>
+            </div>
+          </div>
+        </div>
+        <!-- Development Practices -->
+        <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="50">
+          <div class="glass-card skill-card h-100">
+            <div class="card-accent"></div>
+            <h5 class="card-title mb-3"><i class="fa-solid fa-brain me-2" style="color:#6ee7ff;"></i>Development Practices</h5>
+            <div>
+              <span class="skill-chip tilt"><i class="fa-solid fa-cubes" style="color:#8b5cf6;"></i>OOP</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-shuffle" style="color:#34d399;"></i>Design Patterns</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-bug" style="color:#f43f5e;"></i>Debugging</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-people-group" style="color:#60a5fa;"></i>Agile</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-handshake" style="color:#22d3ee;"></i>Team Collaboration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- Projects -->
+<section id="projects">
+  <div class="container">
+    <div class="text-center mb-4" data-aos="fade-up">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-subtitle">Real-world full-stack applications built with Spring Boot and modern web technologies.</p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Project 1 -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in">
+        <div class="glass-card project-card h-100">
+          <img class="project-img" alt="Patient Medicine and Appointment System" src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1600&auto=format&fit=crop" />
+          <div class="p-3">
+            <h5 class="project-title">Patient Medicine & Appointment System</h5>
+            <p class="mb-3" style="color: var(--muted);">
+              Healthcare management application for patient registration, doctor management, appointment booking, and medication tracking with a responsive UI.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="skill-chip tilt"><i class="fa-solid fa-leaf" style="color:#34d399;"></i>Spring Boot</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-code" style="color:#22d3ee;"></i>Thymeleaf</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-database" style="color:#60a5fa;"></i>MySQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="50">
+        <div class="glass-card project-card h-100">
+          <img class="project-img" alt="BusBooking System" src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=1600&auto=format&fit=crop" />
+          <div class="p-3">
+            <h5 class="project-title">BusBooking – Bus Reservation System</h5>
+            <p class="mb-3" style="color: var(--muted);">
+              Full-stack bus reservation platform with JWT authentication, seat booking, booking history, and admin dashboard for managing buses and users.
+            </p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="skill-chip tilt"><i class="fa-solid fa-key" style="color:#f472b6;"></i>JWT</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-leaf" style="color:#34d399;"></i>Spring Boot</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-database" style="color:#60a5fa;"></i>MySQL</span>
+            </div>
+            <a class="btn project-btn" href="https://busbooking09-6.onrender.com" target="_blank">
+              <i class="fa-solid fa-arrow-up-right-from-square me-2"></i>Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="glass-card project-card h-100">
+          <img class="project-img" alt="CompareDealsDay" src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1600&auto=format&fit=crop" />
+          <div class="p-3">
+            <h5 class="project-title">CompareDealsDay</h5>
+            <p class="mb-3" style="color: var(--muted);">
+              Deals comparison website that aggregates online offers with category filtering, wishlist, and secure user authentication.
+            </p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="skill-chip tilt"><i class="fa-solid fa-leaf" style="color:#34d399;"></i>Spring Boot</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-key" style="color:#f472b6;"></i>Spring Security</span>
+              <span class="skill-chip tilt"><i class="fa-solid fa-database" style="color:#60a5fa;"></i>MySQL</span>
+            </div>
+            <a class="btn project-btn" href="https://comparedealsday.in" target="_blank">
+              <i class="fa-solid fa-arrow-up-right-from-square me-2"></i>Visit Site
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+ <!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <div class="text-center mb-4" data-aos="fade-up">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-subtitle">Feel free to reach out for collaborations or opportunities.</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <form action="https://formspree.io/f/mjgaknkl" method="POST">
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
+                <label for="name">
+                  <i class="fa-regular fa-user me-2"></i>Name
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+                <label for="email">
+                  <i class="fa-regular fa-envelope me-2"></i>Email
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="text" name="subject" class="form-control" id="subject" placeholder="Subject" required>
+                <label for="subject">
+                  <i class="fa-regular fa-bookmark me-2"></i>Subject
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea name="message" class="form-control" id="message" placeholder="Message" style="height: 140px;" required></textarea>
+                <label for="message">
+                  <i class="fa-regular fa-comment-dots me-2"></i>Message
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="send-btn">
+              <i class="fa-solid fa-paper-plane"></i>
+              Send Message
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="footer pt-5">
+    <div class="container pb-3">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <h6>About</h6>
+          <p class="mt-2" style="color: var(--muted);">
+            Yash Sengar — Java Full Stack Developer passionate about building reliable backends, intuitive interfaces, and scalable systems.
+          </p>
+          <div class="social mt-2">
+            <a href="https://github.com/YashSengar01" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/yash-sengar-305280320/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="mailto:syash8269@gmail.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+          <h6>Quick Links</h6>
+          <ul class="list-unstyled mt-2">
+            <li class="mb-2"><a href="#about"><i class="fa-solid fa-angles-right me-2"></i>About</a></li>
+            <li class="mb-2"><a href="#skills"><i class="fa-solid fa-angles-right me-2"></i>Skills</a></li>
+            <li class="mb-2"><a href="#projects"><i class="fa-solid fa-angles-right me-2"></i>Projects</a></li>
+            <li class="mb-2"><a href="#contact"><i class="fa-solid fa-angles-right me-2"></i>Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-12 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <h6>Contact Info</h6>
+          <ul class="list-unstyled mt-2" style="color: var(--muted);">
+            <li class="mb-2"><i class="fa-solid fa-phone me-2"></i>+91 9312326542</li>
+            <li class="mb-2"><i class="fa-regular fa-envelope me-2"></i><a href="mailto:syash8269@gmail.com">syash8269@gmail.com</a></li>
+            <li class="mb-2"><i class="fa-solid fa-location-dot me-2"></i>India</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom text-center mt-4 pb-3">
+        © 2026 Yash Sengar • Built with ❤️ using HTML, CSS, JavaScript & Bootstrap
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back To Top -->
+  <button id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // AOS initialization
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 120,
+      easing: 'ease-out-cubic'
+    });
+
+    // Back to top behavior
+    const backToTop = document.getElementById('backToTop');
+    const toggleBackToTop = () => {
+      if (window.scrollY > 300) backToTop.style.display = 'inline-flex';
+      else backToTop.style.display = 'none';
+    };
+    window.addEventListener('scroll', toggleBackToTop);
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Close mobile menu on link click and active state
+    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const nav = document.getElementById('navMenu');
+        if (nav.classList.contains('show')) new bootstrap.Collapse(nav).hide();
+        document.querySelectorAll('.navbar .nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // Highlight active section on scroll
+    const sections = ['about','skills','projects','contact'].map(id => document.getElementById(id));
+    const navLinks = Array.from(document.querySelectorAll('.navbar .nav-link'));
+    window.addEventListener('scroll', () => {
+      const pos = window.scrollY + 120;
+      let current = null;
+      for (const sec of sections) {
+        if (sec && sec.offsetTop <= pos && sec.offsetTop + sec.offsetHeight > pos) { current = sec.id; break; }
+      }
+      if (current) {
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${current}`));
+      }
+    });
+
+    // Soft tilt + pop awareness for 3D logos and chips
+    (function(){
+      const tiltEls = document.querySelectorAll('.tilt, .logo-3d');
+      const maxTilt = 10; // degrees
+      tiltEls.forEach(el => {
+        let hovered = false;
+        const scaleHover = 1.1;
+
+        function handleMove(e){
+          const rect = el.getBoundingClientRect();
+          const evt = e.touches ? e.touches[0] : e;
+          const x = evt.clientX - rect.left;
+          const y = evt.clientY - rect.top;
+          const midX = rect.width / 2;
+          const midY = rect.height / 2;
+          const rotY = ((x - midX) / midX) * maxTilt;
+          const rotX = -((y - midY) / midY) * maxTilt;
+          const scale = hovered ? scaleHover : 1;
+          el.style.transform = `translateY(${hovered ? '-8px' : '0px'}) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale(${scale})`;
+        }
+        function onEnter(){ hovered = true; el.style.willChange = 'transform'; }
+        function onLeave(){ hovered = false; el.style.transform = ''; el.style.willChange = ''; }
+
+        el.addEventListener('mousemove', handleMove);
+        el.addEventListener('mouseleave', onLeave);
+        el.addEventListener('mouseenter', onEnter);
+
+        // Touch support
+        el.addEventListener('touchstart', onEnter, {passive:true});
+        el.addEventListener('touchmove', handleMove, {passive:true});
+        el.addEventListener('touchend', onLeave, {passive:true});
+      });
+    })();
+  </script>
+</body>
+</html>
