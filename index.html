@@ -419,6 +419,71 @@
       .spline-wrap { min-height: 360px; margin-top: 2rem; }
       .hero { padding: 5rem 0 3rem; }
     }
+
+  /* --- Skill Card Container --- */
+.skill-card {
+  position: relative; /* Crucial: sets the anchor for the absolute pop-up */
+  transition: all 0.3s ease;
+  z-index: 1; /* Normal layering */
+  cursor: pointer;
+}
+
+/* --- The Pop-up Element (Default State: Hidden) --- */
+.certificate-popup {
+  /* Absolute Positioning to cover the card */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  /* Initial state: slightly shrunk and centered */
+  transform: translate(-50%, -50%) scale(0.85);
+  
+  /* Size and Appearance */
+  width: 90%;
+  max-width: 500px; /* Prevents it from getting too huge on large screens */
+  background: rgba(255, 255, 255, 0.98); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4); /* Strong shadow for depth */
+  
+  /* Animation and Interactivity */
+  z-index: 100; /* Ensure it sits above ALL other content */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smooth 'pop' effect */
+  pointer-events: none; /* Ignore mouse until visible */
+}
+
+/* --- Certificate Image inside the Pop-up --- */
+.certificate-popup img {
+  border: 4px solid #fff; /* White border for emphasis */
+}
+
+/* --- Pop-up Actions (Button) --- */
+.popup-actions .btn-info {
+  background-color: #17a2b8; /* Bootstrap Info Color */
+  border: none;
+}
+
+/* ========================================= */
+/* --- Trigger: Show Pop-up on Card Hover --- */
+/* ========================================= */
+.skill-card:hover .certificate-popup {
+  opacity: 1;
+  visibility: visible;
+  
+  /* Final state: Full size and centered */
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto; /* Re-enable clicks on the button */
+}
+
+/* --- Optional: Polish Background Card Text on Hover --- */
+.skill-card:hover h5, 
+.skill-card:hover p {
+  filter: blur(1.5px); /* Gentle blur to focus on the certificate */
+  opacity: 0.6;
+  transition: 0.3s ease;
+}
   </style>
 </head>
 <body>
@@ -496,6 +561,77 @@
       </div>
     </div>
   </section>
+
+  <!-- Education & Certifications -->
+<section id="education">
+  <div class="container">
+
+    <div class="text-center mb-4" data-aos="fade-up">
+      <h2 class="section-title">Education & Certifications</h2>
+      <p class="section-subtitle">My academic background and professional certifications.</p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Education -->
+      <div class="col-md-6" data-aos="fade-right">
+        <div class="glass-card skill-card h-100 p-4">
+
+          <h5 class="card-title mb-3">
+            <i class="fa-solid fa-graduation-cap me-2" style="color:#6ee7ff;"></i>
+            Education
+          </h5>
+
+          <h6 class="fw-bold">Diploma in Computer Science & Engineering</h6>
+          <p style="color: var(--muted); margin-bottom:10px;">
+            Board of Technical Education Uttar Pradesh (BTEUP)
+          </p>
+
+          <span class="skill-chip tilt">
+            <i class="fa-solid fa-calendar"></i> 2022 – 2025
+          </span>
+
+          <span class="skill-chip tilt">
+            <i class="fa-solid fa-location-dot"></i> HI-TECH College
+          </span>
+
+        </div>
+      </div>
+
+      <!-- Certification -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<div class="col-md-6" data-aos="fade-left">
+  <div class="glass-card skill-card h-100 p-4 text-center position-relative overflow-hidden">
+
+    <h5 class="card-title mb-3">
+      <i class="fa-solid fa-certificate me-2 text-info"></i>
+      Java Full Stack Developer
+    </h5>
+
+    <p class="mb-4" style="color: var(--muted);">
+      GUVI Geek Network (IITM Incubated)
+    </p>
+
+    <div class="certificate-popup">
+      <img src="Image/GuviCertification - G0U2sXgplv8MiIk8 (7).png" 
+           alt="GUVI Java Full Stack Certificate - Yash Sengar"
+           class="img-fluid rounded shadow-lg border border-light">
+      
+      <div class="popup-actions mt-3">
+         <a href="Image/GuviCertification - G0U2sXgplv8MiIk8 (7).png" target="_blank" class="btn btn-info btn-sm">
+           <i class="fa-solid fa-expand me-1"></i> View Full Size
+         </a>
+         <span class="ms-2 text-muted small">(Click outside to close)</span>
+      </div>
+    </div>
+    </div>
+</div>
+
+
+    </div>
+  </div>
+</section>
 
   <!-- Skills -->
   <section id="skills">
